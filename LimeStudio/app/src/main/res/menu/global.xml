@@ -25,22 +25,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_share"
-        android:icon="@drawable/ic_menu_share"
-        android:title="@string/action_share"
-        android:orderInCategory="50"
-        app:showAsAction="always" />
-    <item
         android:id="@+id/action_preference"
         android:icon="@drawable/ic_action_settings"
         android:title="@string/action_preference"
         android:orderInCategory="100"
         app:showAsAction="always" />
-    <!--<item
-        android:id="@+id/action_news"
-        android:title="@string/action_news"
-        android:orderInCategory="150"
-        app:showAsAction="never" />-->
     <item
         android:id="@+id/action_help"
         android:title="@string/action_help"
@@ -51,10 +40,4 @@
         android:title="@string/action_reset"
         android:orderInCategory="300"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/action_adfree"
-        android:title="@string/action_adfree"
-        android:orderInCategory="400"
-        app:showAsAction="never" />
 </menu>
-<!-- From: file:/C:/Data/Development/Android/Studio/LIMEIMEAS/app/src/main/res/menu/global.xml -->

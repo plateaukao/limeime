@@ -55,8 +55,6 @@ import android.widget.Toast;
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.dropbox.client2.session.AppKeyPair;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 
 import net.toload.main.hd.DBServer;
 import net.toload.main.hd.Lime;
@@ -94,11 +92,6 @@ public class SetupImFragment extends Fragment {
     private ProgressDialog progress;
 
     private final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 0;
-    // Google API
-    /*private GoogleAccountCredential credential;
-    static final int REQUEST_ACCOUNT_PICKER_BACKUP = 1;
-    static final int REQUEST_ACCOUNT_PICKER_RESTORE = 2;*/
-
     // Dropbox
     DropboxAPI<AndroidAuthSession> mdbapi;
     String dropboxAccessToken;
@@ -132,10 +125,6 @@ public class SetupImFragment extends Fragment {
     // Backup Restore
     Button btnSetupImBackupLocal;
     Button btnSetupImRestoreLocal;
-    Button btnSetupImBackupGoogle;
-    Button btnSetupImRestoreGoogle;
-    Button btnSetupImBackupDropbox;
-    Button btnSetupImRestoreDropbox;
 
     private ConnectivityManager connManager;
 
@@ -302,15 +291,10 @@ public class SetupImFragment extends Fragment {
         btnSetupImHs = (Button) rootView.findViewById(R.id.btnSetupImHs);
         btnSetupImWb = (Button) rootView.findViewById(R.id.btnSetupImWb);
         btnSetupImPinyin = (Button) rootView.findViewById(R.id.btnSetupImPinyin);
-        btnDownloadOldVersion = (Button) rootView.findViewById(R.id.btnDownloadOldVersion);
 
         // Backup and Restore Setting
         btnSetupImBackupLocal = (Button) rootView.findViewById(R.id.btnSetupImBackupLocal);
         btnSetupImRestoreLocal = (Button) rootView.findViewById(R.id.btnSetupImRestoreLocal);
-        btnSetupImBackupGoogle = (Button) rootView.findViewById(R.id.btnSetupImBackupGoogle);
-        btnSetupImRestoreGoogle = (Button) rootView.findViewById(R.id.btnSetupImRestoreGoogle);
-        btnSetupImBackupDropbox = (Button) rootView.findViewById(R.id.btnSetupImBackupDropbox);
-        btnSetupImRestoreDropbox = (Button) rootView.findViewById(R.id.btnSetupImRestoreDropbox);
 
         btnSetupImBackupLocal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -323,41 +307,6 @@ public class SetupImFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 showAlertDialog(Lime.RESTORE, Lime.LOCAL, getResources().getString(R.string.l3_initial_restore_confirm));
-            }
-        });
-
-        btnSetupImBackupGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (connManager.getActiveNetworkInfo() != null && connManager.getActiveNetworkInfo().isConnected()) {
-                    showAlertDialog(Lime.BACKUP, Lime.GOOGLE, getResources().getString(R.string.l3_initial_cloud_backup_confirm));
-                }
-            }
-        });
-
-        btnSetupImRestoreGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (connManager.getActiveNetworkInfo() != null && connManager.getActiveNetworkInfo().isConnected()) {
-                    showAlertDialog(Lime.RESTORE, Lime.GOOGLE, getResources().getString(R.string.l3_initial_cloud_restore_confirm));
-                }
-            }
-        });
-        btnSetupImBackupDropbox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (connManager.getActiveNetworkInfo() != null && connManager.getActiveNetworkInfo().isConnected()) {
-                    showAlertDialog(Lime.BACKUP, Lime.DROPBOX, getResources().getString(R.string.l3_initial_dropbox_backup_confirm));
-                }
-            }
-        });
-
-        btnSetupImRestoreDropbox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (connManager.getActiveNetworkInfo() != null && connManager.getActiveNetworkInfo().isConnected()) {
-                    showAlertDialog(Lime.RESTORE, Lime.DROPBOX, getResources().getString(R.string.l3_initial_dropbox_restore_confirm));
-                }
             }
         });
 
@@ -404,10 +353,6 @@ public class SetupImFragment extends Fragment {
                         rootView.findViewById(R.id.Setup_Wizard).setVisibility(View.GONE);
                         btnSetupImBackupLocal.setEnabled(true);
                         btnSetupImRestoreLocal.setEnabled(true);
-                        btnSetupImBackupGoogle.setEnabled(true);
-                        btnSetupImRestoreGoogle.setEnabled(true);
-                        btnSetupImBackupDropbox.setEnabled(true);
-                        btnSetupImRestoreDropbox.setEnabled(true);
                         btnSetupImImportStandard.setEnabled(true);
                         btnSetupImImportRelated.setEnabled(true);
                         btnDownloadOldVersion.setEnabled(true);
@@ -432,10 +377,6 @@ public class SetupImFragment extends Fragment {
                             btnSetupImGrantPermission.setVisibility(View.GONE);
                             btnSetupImBackupLocal.setEnabled(true);
                             btnSetupImRestoreLocal.setEnabled(true);
-                            btnSetupImBackupGoogle.setEnabled(true);
-                            btnSetupImRestoreGoogle.setEnabled(true);
-                            btnSetupImBackupDropbox.setEnabled(true);
-                            btnSetupImRestoreDropbox.setEnabled(true);
                             btnSetupImImportStandard.setEnabled(true);
                             btnSetupImImportRelated.setEnabled(true);
                             btnDownloadOldVersion.setEnabled(true);
@@ -446,10 +387,6 @@ public class SetupImFragment extends Fragment {
                             btnSetupImGrantPermission.setVisibility(View.VISIBLE);
                             btnSetupImBackupLocal.setEnabled(false);
                             btnSetupImRestoreLocal.setEnabled(false);
-                            btnSetupImBackupGoogle.setEnabled(false);
-                            btnSetupImRestoreGoogle.setEnabled(false);
-                            btnSetupImBackupDropbox.setEnabled(false);
-                            btnSetupImRestoreDropbox.setEnabled(false);
                             btnSetupImImportStandard.setEnabled(false);
                             btnSetupImImportRelated.setEnabled(false);
                             btnDownloadOldVersion.setEnabled(false);

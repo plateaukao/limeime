@@ -55,8 +55,6 @@ import net.toload.main.hd.global.LIMEUtilities;
 import net.toload.main.hd.limedb.LimeDB;
 import net.toload.main.hd.limesettings.LIMEPreferenceHC;
 import net.toload.main.hd.ui.HelpDialog;
-import net.toload.main.hd.ui.PaymentDialog;
-import net.toload.main.hd.ui.ShareDialog;
 
 import java.util.List;
 
@@ -325,19 +323,9 @@ public class NavigationDrawerFragment extends Fragment {
             return true;
         }
 
-        if(item.getItemId() == R.id.action_share){
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            ShareDialog dialog = ShareDialog.newInstance();
-            dialog.show(ft, "sharedialog");
-        }else if(item.getItemId() == R.id.action_preference){
-            /*  Targeting at SDK level > 16 now.
-            if(android.os.Build.VERSION.SDK_INT < 11){  //Jeremy '12,4,30 Add for deprecated preferenceActivity after API 11 (HC)
-                Intent setting = new Intent(this.getActivity(), LIMEPreference.class);
-                startActivity(setting);
-            }else {*/
+        if(item.getItemId() == R.id.action_preference){
             Intent setting = new Intent(this.getActivity(), LIMEPreferenceHC.class);
             startActivity(setting);
-            //}
         }else if(item.getItemId() == R.id.action_help){
             FragmentTransaction ft = getFragmentManager().beginTransaction();
             HelpDialog dialog = HelpDialog.newInstance();
@@ -369,29 +357,7 @@ public class NavigationDrawerFragment extends Fragment {
             AlertDialog alert = builder.create();
             alert.show();
 
-        }else if(item.getItemId() == R.id.action_adfree){
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            PaymentDialog dialog = PaymentDialog.newInstance();
-            dialog.show(ft, "paymentdialog");
         }
-
-        /*else if(item.getItemId() == R.id.action_news){
-            FragmentTransaction ft = getFragmentManager().beginTransaction();
-            NewsDialog dialog = NewsDialog.newInstance();
-            dialog.show(ft, "newsdialog");
-        }*/
-        /**
-         *
-         Intent download = new Intent(v.getContext(), DownloadActivity.class);
-         download.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-         startActivity(download);
-         */
-
-        /*if (item.getItemId() == R.id.action_example) {
-            Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
-            return true;
-        }*/
-
         return super.onOptionsItemSelected(item);
     }
 
