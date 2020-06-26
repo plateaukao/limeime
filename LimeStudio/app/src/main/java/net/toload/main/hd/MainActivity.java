@@ -55,8 +55,6 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.android.vending.billing.IInAppBillingService;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -389,29 +387,6 @@ public class MainActivity extends AppCompatActivity
         serviceIntent.setPackage("com.android.vending");
         mService = null;
         bindService(serviceIntent, mServiceConn, Context.BIND_AUTO_CREATE);
-
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .build();
-
-        //Admob IntersitialAD
-        //Only show intersitialAd for one time.  It's quite annoying
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(LIME.publisher);
-
-        mInterstitialAd.loadAd(adRequest);
-
-        mInterstitialAd.setAdListener(new AdListener() {
-            public void onAdLoaded() {
-                if (intersitialAdShowed) return;
-                if (mInterstitialAd.isLoaded()) {
-                    mInterstitialAd.show();
-                    intersitialAdShowed = true;
-                    mInterstitialAd.setAdListener(null);
-                    mInterstitialAd = null; //destroy mintersitialAd
-                }
-            }
-        });
     }
 
     public void initialImList() {

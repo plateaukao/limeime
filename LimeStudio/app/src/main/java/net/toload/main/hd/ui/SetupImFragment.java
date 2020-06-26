@@ -70,15 +70,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 
-//admob
-//google drive
-/*  vpon import
-import com.vpadn.ads.VpadnAdRequest;
-import com.vpadn.ads.VpadnAdSize;
-import com.vpadn.ads.VpadnBanner;
-*/
-// admob import
-
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
@@ -369,36 +360,6 @@ public class SetupImFragment extends Fragment {
                 }
             }
         });
-
-        // Handle AD Display
-        boolean paymentflag = mLIMEPref.getParameterBoolean(Lime.PAYMENT_FLAG, false);
-
-
-        if(!paymentflag){
-
-            AdRequest adRequest = new AdRequest.Builder()
-                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                    .build();
-
-
-            AdView mAdView = (AdView)  rootView.findViewById(R.id.adView);
-            mAdView.loadAd(adRequest);
-
-
-            /*
-            adBannerLayout = (RelativeLayout) rootView.findViewById(R.id.adLayout);
-            vpadnBanner = new VpadnBanner(getActivity(), Lime.VPON_BANNER_ID, VpadnAdSize.SMART_BANNER, "TW");
-            VpadnAdRequest adRequest = new VpadnAdRequest();
-            adRequest.setEnableAutoRefresh(true);
-            vpadnBanner.loadAd(adRequest);
-            adBannerLayout.addView(vpadnBanner);
-            */
-        }
-        else{
-            AdView mAdView = (AdView) rootView.findViewById(R.id.adView);
-            mAdView.setVisibility(View.GONE);
-
-        }
 
         PackageInfo pInfo;
         try {
