@@ -51,8 +51,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.dropbox.client2.DropboxAPI;
-
 import net.toload.main.hd.DBServer;
 import net.toload.main.hd.Lime;
 import net.toload.main.hd.R;
@@ -112,8 +110,6 @@ public class SetupImFragment extends Fragment {
     Button btnSetupImHs;
     Button btnSetupImWb;
     Button btnSetupImPinyin;
-
-    Button btnDownloadOldVersion;
 
     // Backup Restore
     Button btnSetupImBackupLocal;
@@ -320,7 +316,6 @@ public class SetupImFragment extends Fragment {
                         btnSetupImRestoreLocal.setEnabled(true);
                         btnSetupImImportStandard.setEnabled(true);
                         btnSetupImImportRelated.setEnabled(true);
-                        btnDownloadOldVersion.setEnabled(true);
                     }
                     else  //LIME is activated, but not active keyboard
                     {
@@ -344,7 +339,6 @@ public class SetupImFragment extends Fragment {
                             btnSetupImRestoreLocal.setEnabled(true);
                             btnSetupImImportStandard.setEnabled(true);
                             btnSetupImImportRelated.setEnabled(true);
-                            btnDownloadOldVersion.setEnabled(true);
                         }
                         else
                         {
@@ -354,7 +348,6 @@ public class SetupImFragment extends Fragment {
                             btnSetupImRestoreLocal.setEnabled(false);
                             btnSetupImImportStandard.setEnabled(false);
                             btnSetupImImportRelated.setEnabled(false);
-                            btnDownloadOldVersion.setEnabled(false);
                         }
 
                     }
@@ -629,43 +622,6 @@ public class SetupImFragment extends Fragment {
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
                         SetupImLoadDialog dialog = SetupImLoadDialog.newInstance(Lime.DB_TABLE_PINYIN, handler);
                         dialog.show(ft, "loadimdialog");
-                    }
-                });
-
-
-                btnDownloadOldVersion.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                        builder.setMessage(getResources().getString(R.string.setup_im_download_old_version_confirm));
-                        builder.setCancelable(false);
-                        builder.setPositiveButton(getResources().getString(R.string.dialog_confirm),
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        DownloadManager downloadManager = (DownloadManager) activity.getSystemService(Context.DOWNLOAD_SERVICE);
-
-                                        Uri uri = Uri.parse(Lime.LIME_OLD_VERSION_URL);
-                                        DownloadManager.Request request = new DownloadManager.Request(uri);
-                                        request.setTitle("LIMEHD 3.9.1");
-                                        request.setDescription(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)+ File.separator+"limehd_3_9_1.apk");
-                                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, "limehd_3_9_1.apk");
-                                        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                                        downloadManager.enqueue(request);
-
-                                        showToastMessage(getResources().getString(R.string.setup_im_download_old_version_hint)+
-                                                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator+"limehd_3_9_1.apk", Toast.LENGTH_LONG);
-
-                                    }
-                                });
-                        builder.setNegativeButton(getResources().getString(R.string.dialog_cancel),
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-
-                                    }
-                                });
-
-                        AlertDialog alert = builder.create();
-                        alert.show();
                     }
                 });
 

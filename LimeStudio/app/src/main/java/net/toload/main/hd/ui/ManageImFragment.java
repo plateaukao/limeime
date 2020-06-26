@@ -43,14 +43,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-
-/* Vpon
-import com.vpadn.ads.VpadnAdRequest;
-import com.vpadn.ads.VpadnAdSize;
-import com.vpadn.ads.VpadnBanner;
-*/
 import net.toload.main.hd.Lime;
 import net.toload.main.hd.MainActivity;
 import net.toload.main.hd.R;
@@ -118,10 +110,6 @@ public class ManageImFragment extends Fragment {
 
     private ProgressDialog progress;
     private LIMEPreferenceManager mLIMEPref;
-
-    // Vpon AD
-    //private RelativeLayout adBannerLayout;
-    //private VpadnBanner vpadnBanner = null;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -312,35 +300,6 @@ public class ManageImFragment extends Fragment {
 
         searchword(null);
 
-        // Handle AD Display
-        boolean paymentflag = mLIMEPref.getParameterBoolean(Lime.PAYMENT_FLAG, false);
-        if(!paymentflag) {
-            /* Vpon
-            adBannerLayout = (RelativeLayout) root.findViewById(R.id.adLayout);
-            vpadnBanner = new VpadnBanner(getActivity(), Lime.VPON_BANNER_ID, VpadnAdSize.SMART_BANNER, "TW");
-
-            VpadnAdRequest adRequest = new VpadnAdRequest();
-            adRequest.setEnableAutoRefresh(true);
-            vpadnBanner.loadAd(adRequest);
-
-            adBannerLayout.addView(vpadnBanner);
-            */
-            AdRequest adRequest = new AdRequest.Builder()
-                    .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                    .build();
-
-
-            AdView mAdView = (AdView) rootView.findViewById(R.id.adView);
-            mAdView.loadAd(adRequest);
-
-
-        }
-        else{
-            AdView mAdView = (AdView) rootView.findViewById(R.id.adView);
-            mAdView.setVisibility(View.GONE);
-
-        }
-
         return rootView;
     }
 
@@ -355,12 +314,6 @@ public class ManageImFragment extends Fragment {
         if((curquery == null && total == 0) || curquery != prequery ){
             total = datasource.getWordSize(table, curquery, searchroot);
             page = 0;
-           /* try {
-                datasource.open();
-                datasource.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }*/
         }
         if(manageimthread != null && manageimthread.isAlive()){
             handler.removeCallbacks(manageimthread);
@@ -472,13 +425,6 @@ public class ManageImFragment extends Fragment {
         String removesql = "DELETE FROM " + this.table + " WHERE " + Lime.DB_COLUMN_ID + " = '" + id + "'";
 
         datasource.remove(removesql);
-        /*try {
-            datasource.open();
-            datasource.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
-
         total--;
         searchword();
         //updateGridView(this.wordlist);
@@ -501,23 +447,8 @@ public class ManageImFragment extends Fragment {
         //Jeremy '15,6,6 the record may already exist, use original add or update mapping function in LIMEDB instead.
         // code3r information will also generated for phonetic table.
         datasource.addOrUpdateMappingRecord(this.table, code, word, score);
-        //String insertsql = Word.getInsertQuery(this.table, obj);
-        //datasource.insert(insertsql);
-
-
-       /* try {
-            datasource.open();
-            datasource.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
-
         total++;
         searchword();
-        // Add to temp list
-        /*page = 0;
-        this.wordlist.add(0,obj);
-        updateGridView(this.wordlist);*/
     }
 
     public void updateWord(int id, String code, int score, String word) {
@@ -543,56 +474,20 @@ public class ManageImFragment extends Fragment {
         //Jeremy '15,6,6  use original add or update mapping function in LIMEDB instead.
         // code3r information will also generated for phonetic table.
         datasource.addOrUpdateMappingRecord(this.table, code, word, score);
-/*
-        // Update record in the database
-        String updatesql = "UPDATE " + this.table + " SET ";
-                updatesql += Lime.DB_COLUMN_CODE + " = \"" + Lime.formatSqlValue(code) + "\", ";
-                if(this.table.equals("phonetic"))  //Jeremy '15,6,6 add no tone code (code3r) with code ripped 3467
-                    updatesql += Lime.DB_COLUMN_CODE3R + " = \"" + Lime.formatSqlValue(code.replaceAll("[3467 ]", "")) + "\", ";
-                updatesql += Lime.DB_COLUMN_SCORE + " = \"" + score + "\", ";
-                updatesql += Lime.DB_COLUMN_WORD + " = \"" + Lime.formatSqlValue(word) + "\" ";
-                updatesql += " WHERE " + Lime.DB_COLUMN_ID + " = \"" + id + "\"";
-
-        //datasource.update(updatesql);
-      */
-        /*try {
-            datasource.open();
-            datasource.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
         searchword();
-        //updateGridView(this.wordlist);
     }
 
     public void updateKeyboard(String keyboard) {
 
         if(keyboardlist == null){
             keyboardlist = datasource.getKeyboard();
-           /* try {
-                datasource.open();
-                datasource.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }*/
         }
         for(Keyboard k: keyboardlist){
             if(k.getCode().equals(keyboard)){
                 datasource.setImKeyboard(table, k);
                 btnManageImKeyboard.setText(k.getDesc());
-                /*try {
-                    datasource.open();
-                    datasource.close();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }*/
             }
         }
 
     }
-
-    //public void updateRelated(String updatecode) {
-    //    datasource.updateSimilarCodeListInRelatedColumn(table, updatecode);
-    //}
-
 }

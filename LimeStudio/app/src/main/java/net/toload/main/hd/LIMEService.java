@@ -1705,7 +1705,7 @@ public class LIMEService extends InputMethodService implements
         } else if (primaryCode == LIMEKeyboardView.KEYCODE_OPTIONS) {
             handleOptions();
         } else if (primaryCode == LIMEKeyboardView.KEYCODE_SPACE_LONGPRESS) {
-            showIMPicker();
+            handleOptions();
         } else if (primaryCode == KEYCODE_SWITCH_TO_SYMBOL_MODE && mInputView != null) { //->symbol keyboard
             switchKeyboard(primaryCode);
         } else if (primaryCode == KEYCODE_SWITCH_SYMBOL_KEYBOARD && mInputView != null) { //->switch symbols1 keyboards
@@ -3427,9 +3427,7 @@ public class LIMEService extends InputMethodService implements
 
 
     public void swipeRight() {
-        //if (mCompletionOn) {
         pickHighlightedCandidate();
-        //}
     }
 
     public void swipeLeft() {
@@ -3450,10 +3448,6 @@ public class LIMEService extends InputMethodService implements
     public void onPress(int primaryCode) {
         if (DEBUG)
             Log.i(TAG, "onPress(): code = " + primaryCode);
-        // Record key press time (press down)
-        //keyPressTime = System.currentTimeMillis();
-        // To identify the source of character (Software keyboard or physical
-        // keyboard)
         hasPhysicalKeyPressed = false;
 
         if (hasDistinctMultitouch && primaryCode == LIMEBaseKeyboard.KEYCODE_SHIFT) {
@@ -3509,17 +3503,6 @@ public class LIMEService extends InputMethodService implements
 
         }
     }
-/*
-    public boolean isValidTime(Date target) {
-        Calendar srcCal = Calendar.getInstance();
-        srcCal.setTime(new Date());
-        Calendar destCal = Calendar.getInstance();
-        destCal.setTime(target);
-
-        return srcCal.getTimeInMillis() - destCal.getTimeInMillis() < 1800000;
-
-    }
-*/
 
     @Override
     public void onDestroy() {
@@ -3532,20 +3515,6 @@ public class LIMEService extends InputMethodService implements
 
     }
 
-    /*
-	@Override
-	public void onUpdateCursor(Rect newCursor) {
-		if(DEBUG) 
-			Log.i(TAG, "onUpdateCursor(): Top:" 
-				+ newCursor.top + ". Right:" + newCursor.right
-				+ ". bottom:" + newCursor.bottom + ". left:" + newCursor.left );
-		
-		
-		if(mCandidateView!=null)
-			mCandidateView.onUpdateCursor(newCursor);
-		super.onUpdateCursor(newCursor);
-	}
-*/
     @Override
     public void onCancel() {
         if (DEBUG)

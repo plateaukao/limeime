@@ -76,10 +76,7 @@ public class MainActivityHandler extends Handler {
             activity.shareTo(filepath, Lime.SHARE_TYPE_TXT);
         }else if(action != null && action.equalsIgnoreCase("initialpreference")){
             activity.initialDefaultPreference();
-        }else if(action != null && action.equalsIgnoreCase("showmessageboard")){
-            activity.showMessageBoard();
         }
-
     }
 
     public void cancelProgress() {

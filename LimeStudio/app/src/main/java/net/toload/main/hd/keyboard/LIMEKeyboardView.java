@@ -26,29 +26,24 @@ package net.toload.main.hd.keyboard;
 
 import net.toload.main.hd.R;
 import net.toload.main.hd.keyboard.LIMEBaseKeyboard.Key;
+
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.inputmethod.InputMethodManager;
 
 public class LIMEKeyboardView extends LIMEKeyboardBaseView {
 	static final boolean DEBUG = false;
 	static final String TAG = "LIMEKeyboardView";
 
 	public static final int KEYCODE_OPTIONS = -100;
-	//public static final int KEYCODE_SHIFT_LONGPRESS = -101;
 	public static final int KEYCODE_SPACE_LONGPRESS = -102;
     public static final int KEYCODE_NEXT_IM = -104;
     public static final int KEYCODE_PREV_IM = -105;
     
-	//static final String PREF = "LIMEXY";
-	
-	//private boolean mLongPressProcessed;
-	
-   // private Keyboard mPhoneKeyboard;
-  
-    private int mKeyHeight=0;
+    private int mKeyHeight;
 
 	public LIMEKeyboardView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -68,7 +63,11 @@ public class LIMEKeyboardView extends LIMEKeyboardBaseView {
 				+"; key_height = " + mKeyHeight
 					);
 		if (key.codes[0] == LIMEBaseKeyboard.KEYCODE_DONE) {
-			getOnKeyboardActionListener().onKey(KEYCODE_OPTIONS, null,0,0);
+			// Daniel
+			//getOnKeyboardActionListener().onKey(KEYCODE_OPTIONS, null,0,0);
+			// change to show system input method picker
+			InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.showInputMethodPicker();
 			return true;
 		}else if (key.codes[0] == LIMEKeyboard.KEYCODE_SPACE
 				&& Math.abs(((LIMEKeyboard) this.getKeyboard()).getSpaceDragDiff() ) < mKeyHeight/5){ //Jeremy '12,4,23 avoid small move blocking the long press.
@@ -78,7 +77,6 @@ public class LIMEKeyboardView extends LIMEKeyboardBaseView {
 			return super.onLongPress(key);
 		}
 	}
-	
 
 	/*
 	 *
