@@ -288,15 +288,6 @@ public class Lime {
     public static final String LOCAL = "LOCAL";
 
     public static final String DROPBOX = "DROPBOX";
-    public static final String DROPBOX_TYPE = "DROPBOX_TYPE";
-    // old dropbox key paris
-    public final static String DROPBOX_APP_KEY = "keuuzhfc6efjf6t";
-    public final static String DROPBOX_APP_SECRET = "4y8fy4rqk8rofd8";
-
-    //public static final String DROPBOX_APP_KEY = "1a85ahrq8uh60r7";
-    //public static final String DROPBOX_APP_SECRET = "l3yyjll7ef3vfb3";
-    public static final String DROPBOX_ACCESS_TOKEN = "DROPBOX_ACCESS_TOKEN";
-    public static final String DROPBOX_REQUEST_FLAG = "DROPBOX_REQUEST_FLAG";
 
     public static final String DEVICE = "device";
     public static final int GOOGLE_RETRIEVE_MAXIMUM = 500;

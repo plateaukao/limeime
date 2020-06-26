@@ -44,7 +44,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,8 +52,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dropbox.client2.DropboxAPI;
-import com.dropbox.client2.android.AndroidAuthSession;
-import com.dropbox.client2.session.AppKeyPair;
 
 import net.toload.main.hd.DBServer;
 import net.toload.main.hd.Lime;
@@ -92,12 +89,8 @@ public class SetupImFragment extends Fragment {
     private ProgressDialog progress;
 
     private final int MY_PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 0;
-    // Dropbox
-    DropboxAPI<AndroidAuthSession> mdbapi;
-    String dropboxAccessToken;
 
     //Activate LIME IM
-
     Button btnSetupImSystemSettings;
     Button btnSetupImSystemIMPicker;
     Button btnSetupImGrantPermission;
@@ -744,14 +737,14 @@ public class SetupImFragment extends Fragment {
 
 
     public void backupLocalDrive(){
-        initialThreadTask(Lime.BACKUP, Lime.LOCAL, null);
+        initialThreadTask(Lime.BACKUP, Lime.LOCAL);
     }
 
     public void restoreLocalDrive(){
-        initialThreadTask(Lime.RESTORE, Lime.LOCAL, null);
+        initialThreadTask(Lime.RESTORE, Lime.LOCAL);
     }
 
-    public void initialThreadTask(String action, String type, DropboxAPI mdbapi) {
+    public void initialThreadTask(String action, String type) {
 
         // Default Setting
         mLIMEPref.setParameter("dbtarget", Lime.DEVICE);
@@ -760,13 +753,13 @@ public class SetupImFragment extends Fragment {
             if(backupthread != null && backupthread.isAlive()){
                 handler.removeCallbacks(backupthread);
             }
-            backupthread = new Thread(new SetupImBackupRunnable(this, handler, type, mdbapi));
+            backupthread = new Thread(new SetupImBackupRunnable(this, handler, type));
             backupthread.start();
         }else if(action.equals(Lime.RESTORE)){
             if(restorethread != null && restorethread.isAlive()){
                 handler.removeCallbacks(restorethread);
             }
-            restorethread = new Thread(new SetupImRestoreRunnable(this, handler, type, mdbapi));
+            restorethread = new Thread(new SetupImRestoreRunnable(this, handler, type));
             restorethread.start();
         }
     }
