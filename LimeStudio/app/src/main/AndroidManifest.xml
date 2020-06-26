@@ -151,11 +151,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".ui.SetupImGoogleActivity"
-            android:label="@string/title_activity_setup_im_google"
-            android:theme="@style/Theme.AppCompat.Transparent" >
-        </activity>
     </application>
 
 </manifest>
